@@ -284,7 +284,10 @@ class MemStat(BaseStat):
         :returns: a value between 0 and 1 representing the amount of
             used memory.
         """
-        return (self.total - self.free) / self.total
+        try:
+            return (self.total - self.free) / self.total
+        except ZeroDivisionError:
+            return 0.0
 
 
 class SwapStat(BaseStat):
@@ -316,7 +319,10 @@ class SwapStat(BaseStat):
         :returns: a value between 0 and 1 representing the amount of
             used swap space.
         """
-        return (self.total - self.free) / self.total
+        try:
+            return (self.total - self.free) / self.total
+        except ZeroDivisionError:
+            return 0.0
 
 
 class LoadAvgStat(BaseStat):
@@ -387,7 +393,10 @@ class CPUStat(BaseStat):
         """Return the CPU usage as a percentage.
         :returns: a value between 0 and 1 representing the CPU usage
         """
-        return (self.total - self.idle) / self.total
+        try:
+            return (self.total - self.idle) / self.total
+        except ZeroDivisionError:
+            return 0.0
 
     def __sub__(self, other):
         """Subtract another CPUStat object.
